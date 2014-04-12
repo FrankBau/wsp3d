@@ -19,3 +19,10 @@
 *.exe
 *.out
 *.app
+
+# Visual Studio stuff
+*.vcxproj.user
+*.sdf
+*.suo
+Debug/
+Release/

@@ -20,7 +20,9 @@ int main()
 	read_off(triangulation, "C:/Carleton/Meshes/holmes_off/geometry/octahedron.off"); 
 	
 	//create_cubes(triangulation, 1, 1, 1);
-	//create_cubes(triangulation, 50, 50, 50);
+	
+	// create_cubes(triangulation, 100, 100, 100);
+
 	//read_off(triangulation, "C:/Carleton/CGAL-4.4/demo/Polyhedron/data/cube.off");
 	//read_off(triangulation, "C:/Carleton/CGAL-4.4/demo/Polyhedron/data/ellipsoid.off");
 
@@ -84,7 +86,7 @@ int main()
 		// cell->weight(j, i) = weight; // is this really needed?
 	}
 
-	dump_triangulation(triangulation);
+	// dump_triangulation(triangulation);
 
 	// create_steiner_points(triangulation);
 

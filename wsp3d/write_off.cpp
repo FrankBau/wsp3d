@@ -40,4 +40,6 @@ bool write_off(Triangulation& triangulation, std::string filename)
 	}
 
 	file.close();
+
+	return true;
 }

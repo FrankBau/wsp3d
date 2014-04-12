@@ -23,6 +23,7 @@
 # Visual Studio stuff
 *.vcxproj.user
 *.sdf
+*.opensdf
 *.suo
 Debug/
 Release/

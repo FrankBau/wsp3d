@@ -14,7 +14,7 @@
     <ProjectGuid>{67EC508F-79EB-4F8B-8EDA-6FAF65B90742}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>read_off</RootNamespace>
-    <ProjectName>ShortestPath3D</ProjectName>
+    <ProjectName>WSP3D</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -54,12 +54,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Carleton\CGAL-4.4\include;C:\Carleton\CGAL-4.4\auxiliary\gmp\include;C:\Carleton\boost_1_55_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\CGAL-4.4\include;$(SolutionDir)\..\CGAL-4.4\auxiliary\gmp\include;$(SolutionDir)\..\boost_1_55_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Carleton\CGAL-4.4\lib;C:\Carleton\CGAL-4.4\auxiliary\gmp\lib;C:\Carleton\boost_1_55_0\lib32-msvc-12.0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\..\CGAL-4.4\lib;$(SolutionDir)\..\CGAL-4.4\auxiliary\gmp\lib;$(SolutionDir)\..\boost_1_55_0\lib32-msvc-12.0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>CGAL-vc120-mt-gd-4.4.lib;CGAL_Core-vc120-mt-gd-4.4.lib;libgmp-10.lib;libmpfr-4.lib;CGAL_ImageIO-vc120-mt-gd-4.4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -73,15 +73,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Carleton\CGAL-4.4\include;C:\Carleton\CGAL-4.4\auxiliary\gmp\include;C:\Carleton\boost_1_55_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\CGAL-4.4\include;$(SolutionDir)\..\CGAL-4.4\auxiliary\gmp\include;$(SolutionDir)\..\boost_1_55_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Carleton\CGAL-4.4\lib;C:\Carleton\CGAL-4.4\auxiliary\gmp\lib;C:\Carleton\boost_1_55_0\lib32-msvc-12.0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CGAL-vc120-mt-gd-4.4.lib;CGAL_Core-vc120-mt-gd-4.4.lib;libgmp-10.lib;libmpfr-4.lib;CGAL_ImageIO-vc120-mt-gd-4.4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\..\CGAL-4.4\lib;$(SolutionDir)\..\CGAL-4.4\auxiliary\gmp\lib;$(SolutionDir)\..\boost_1_55_0\lib32-msvc-12.0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CGAL-vc120-mt-4.4.lib;CGAL_Core-vc120-mt-4.4.lib;libgmp-10.lib;libmpfr-4.lib;CGAL_ImageIO-vc120-mt-4.4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

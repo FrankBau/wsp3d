@@ -27,20 +27,35 @@
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
+#include <boost/graph/graphviz.hpp>
+#include <boost/graph/small_world_generator.hpp>
+
 #include <boost/property_map/property_map.hpp>
 
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
 #include <boost/random/uniform_real_distribution.hpp>
-#include <boost/graph/small_world_generator.hpp>
 
 ///////////////////////////// CGAL /////////////////////////////
 
 #include <CGAL/Random.h>
+
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
+
+#include <CGAL/squared_distance_3.h>
+
 #include <CGAL/Delaunay_triangulation_3.h>
 #include <CGAL/Triangulation_cell_base_3.h>
 #include <CGAL/Triangulation_vertex_base_3.h>
+
+///////////////////////////// boost Graph /////////////////////////////
+
+struct GraphNode;
+struct GraphEdge;
+
+typedef boost::adjacency_list < boost::vecS, boost::vecS, boost::undirectedS, GraphNode, GraphEdge > Graph;
+typedef boost::graph_traits<Graph>::vertex_descriptor GraphNode_descriptor;
+typedef boost::graph_traits<Graph>::edge_descriptor   GraphEdge_descriptor;
 
 ///////////////////////////// CGAL Triangulation /////////////////////////////
 
@@ -138,10 +153,17 @@ public:
 		return _weight;
 	}
 
+	GraphNode_descriptor& node()
+	{
+		return _node;
+	}
+
 private:
 	void init() 
 	{ 
+		_node = 0;
 		_weight = HUGE_VALD;
+
 		for (int i = 0; i < 4; ++i) 
 			for (int j = 0; j < 4; ++j) 
 				_w[i][j] = HUGE_VALD; 
@@ -150,6 +172,7 @@ private:
 	int _info;
 	double _weight;
 	double _w[4][4]; // face (i==j) and edge (i!=j) weights
+	GraphNode_descriptor _node;
 };
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel Kernel;
@@ -158,9 +181,16 @@ typedef CGAL::Triangulation_data_structure_3<My_vertex_base<Kernel>, My_cell_bas
 
 typedef CGAL::Delaunay_triangulation_3<Kernel, Tds>			Triangulation;
 
+// combinatorial types
 typedef Triangulation::Cell									Cell; 
 typedef Triangulation::Facet								Facet;
 typedef Triangulation::Edge									Edge;
+typedef Triangulation::Vertex								Vertex;
+
+// geometric equivalents
+typedef Triangulation::Tetrahedron							Tetrahedron;
+typedef Triangulation::Triangle								Triangle;
+typedef Triangulation::Segment								Segment;
 typedef Triangulation::Point								Point;
 
 typedef Triangulation::Facet_circulator						Facet_circulator;
@@ -168,26 +198,27 @@ typedef Triangulation::Facet_circulator						Facet_circulator;
 typedef Triangulation::Vertex_handle                        Vertex_handle;
 typedef Triangulation::Cell_handle							Cell_handle;
 
-///////////////////////////// boost Graph /////////////////////////////
+///////////////////////////// boost Graph details /////////////////////////////
 
-struct GraphNode{
-	int foo;
+struct GraphNode
+{
+public:
+	GraphNode()
+	{
+		std::cout << "GraphNode()" << std::endl;
+		cell = 0;
+		i = j = -1; 
+	}
+
+	Cell_handle cell;	// the cell it belongs to
+	int i, j;			// index i (face related node) rsp. i,j (edge related node)
+	Point point;
 };
 
-struct GraphEdge{
-	std::string blah;
+struct GraphEdge
+{
+	double weight;
 };
 
-// see http://www.boost.org/doc/libs/1_55_0/libs/graph/doc/using_adjacency_list.html for complexity discussion 
-// VertexList vecS: 
-// - vertex() O(1)
-// - add_vertex() amortized O(1)
-// - remove_vertex() O(V + E) 
-// - space req. much less than listS
-// OutEdgeList vecS: 
-
-typedef boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS, GraphNode, GraphEdge > Graph;
-typedef boost::graph_traits<Graph>::vertex_descriptor GraphNode_descriptor;
-typedef boost::graph_traits<Graph>::edge_descriptor   GraphEdge_descriptor;
 
 #endif

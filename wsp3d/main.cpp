@@ -8,8 +8,6 @@
 #include "write_off.h"
 #include "write_vrml.h"
 
-#include <CGAL/IO/Triangulation_geomview_ostream_3.h>
-
 #include <iostream>
 #include <fstream>
 
@@ -91,9 +89,17 @@ int main()
 
 	create_steiner_points(graph,triangulation);
 
-	//std::ofstream file("triangulation", std::ios::trunc);
-	//file << triangulation;
-	//file.close();
+	std::ofstream file( "graph.dot", std::ios::trunc);
+	if (!file.is_open())
+	{
+		std::cerr << "failed to open graph.dot file " << std::endl;
+		return false;
+	}
+	boost::write_graphviz( file, graph);
+	// post process with dot.exe -Tsvg -O graph.dot or thelike
+	file.close();
+	
+	// boost::dijkstra_shortest_paths()
 
 	std::cout << "This is the end..." << std::endl;
 	return 0;

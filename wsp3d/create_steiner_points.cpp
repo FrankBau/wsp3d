@@ -2,11 +2,25 @@
 
 void create_steiner_points_for_cell(Triangulation& triangulation, Cell_handle cell)
 {
-	std::cerr << "create_steiner_points_for_cell(" << cell->info() << ")" << std::endl;
-	Vertex_handle v0 = cell->vertex(0);
-	Vertex_handle v1 = cell->vertex(1);
-	Vertex_handle v2 = cell->vertex(2);
-	Vertex_handle v3 = cell->vertex(3);
+	std::cerr << "create_steiner_points_for_cell(" << cell->info() << ")";
+
+	Point p0 = cell->vertex(0)->point();
+	Point p1 = cell->vertex(1)->point();
+	Point p2 = cell->vertex(2)->point();
+	Point p3 = cell->vertex(3)->point();
+
+	Kernel::Vector_3 v0 = p0 - CGAL::ORIGIN;
+	Kernel::Vector_3 v1 = p1 - CGAL::ORIGIN;
+	Kernel::Vector_3 v2 = p2 - CGAL::ORIGIN;
+	Kernel::Vector_3 v3 = p3 - CGAL::ORIGIN;
+
+	Kernel::Vector_3 v = ( v0 + v1 + v2 + v3 ) / 2;
+
+	Point p = CGAL::ORIGIN + v;
+
+	std::cerr << " center point at [ " << p << " ] " << std::endl;
+
+	return;
 
 	// we must ensure that every facet in the triangulation is procesed exactly once
 	// there are, however, no explicit facets or edges stored in a triangulation
@@ -31,15 +45,13 @@ void create_steiner_points_for_cell(Triangulation& triangulation, Cell_handle ce
 /*
   add points on the facets and along the edges of triangulation
 */
-void create_steiner_points(Triangulation& triangulation)
+void create_steiner_points(Graph& graph, Triangulation& triangulation)
 {
 	for (auto facet = triangulation.finite_facets_begin(); facet != triangulation.finite_facets_end(); ++facet)
 	{
 		std::cout << "cell=" << facet->first->info() << ", index=" << facet->second << std::endl;
 		
 	}
-
-	return;
 
 	for (auto cell = triangulation.finite_cells_begin(); cell != triangulation.finite_cells_end(); ++cell)
 	{

@@ -7,14 +7,42 @@
 
 #include <cmath>
 #include <cassert>
+
 #include <vector>
 #include <iostream>
 #include <fstream>
 
+// prevent min/max define in "Windows Kits\8.1\Include\shared\minwindef.h"
+#define NOMINMAX
+
+///////////////////////////// boost /////////////////////////////
+
+// #define BOOST_ALL_NO_LIB
+// #define BOOST_ERROR_CODE_HEADER_ONLY
+// #define BOOST_CHRONO_HEADER_ONLY
+
+#include <boost/config.hpp>
+#include <boost/chrono.hpp>
+
+#include <boost/graph/graph_traits.hpp>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/dijkstra_shortest_paths.hpp>
+#include <boost/property_map/property_map.hpp>
+
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int_distribution.hpp>
+#include <boost/random/uniform_real_distribution.hpp>
+#include <boost/graph/small_world_generator.hpp>
+
+///////////////////////////// CGAL /////////////////////////////
+
+#include <CGAL/Random.h>
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Delaunay_triangulation_3.h>
 #include <CGAL/Triangulation_cell_base_3.h>
 #include <CGAL/Triangulation_vertex_base_3.h>
+
+///////////////////////////// CGAL Triangulation /////////////////////////////
 
 template < class GT, class Vb = CGAL::Triangulation_vertex_base_3<GT> >
 class My_vertex_base
@@ -139,5 +167,27 @@ typedef Triangulation::Facet_circulator						Facet_circulator;
 
 typedef Triangulation::Vertex_handle                        Vertex_handle;
 typedef Triangulation::Cell_handle							Cell_handle;
+
+///////////////////////////// boost Graph /////////////////////////////
+
+struct GraphNode{
+	int foo;
+};
+
+struct GraphEdge{
+	std::string blah;
+};
+
+// see http://www.boost.org/doc/libs/1_55_0/libs/graph/doc/using_adjacency_list.html for complexity discussion 
+// VertexList vecS: 
+// - vertex() O(1)
+// - add_vertex() amortized O(1)
+// - remove_vertex() O(V + E) 
+// - space req. much less than listS
+// OutEdgeList vecS: 
+
+typedef boost::adjacency_list < boost::vecS, boost::vecS, boost::directedS, GraphNode, GraphEdge > Graph;
+typedef boost::graph_traits<Graph>::vertex_descriptor GraphNode_descriptor;
+typedef boost::graph_traits<Graph>::edge_descriptor   GraphEdge_descriptor;
 
 #endif

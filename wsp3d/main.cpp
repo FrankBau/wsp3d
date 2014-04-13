@@ -16,7 +16,8 @@
 int main()
 {
 	Triangulation triangulation;
-	
+	Graph graph;
+
 	read_off(triangulation, "C:/Carleton/Meshes/holmes_off/geometry/octahedron.off"); 
 	
 	//create_cubes(triangulation, 1, 1, 1);
@@ -36,7 +37,7 @@ int main()
 	int i = 1;
 	for (auto cell = triangulation.finite_cells_begin(); cell != triangulation.finite_cells_end(); ++cell)
 	{
-		cell->weight() = i/10.0; // random ?
+		cell->weight() = CGAL::default_random.get_double(0,1); // random ?
 		cell->info() = i++;
 	}
 	triangulation.infinite_cell()->info() = 0;
@@ -86,9 +87,9 @@ int main()
 		// cell->weight(j, i) = weight; // is this really needed?
 	}
 
-	// dump_triangulation(triangulation);
+	dump_triangulation(triangulation);
 
-	// create_steiner_points(triangulation);
+	create_steiner_points(graph,triangulation);
 
 	//std::ofstream file("triangulation", std::ios::trunc);
 	//file << triangulation;

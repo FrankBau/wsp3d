@@ -35,7 +35,8 @@ int main()
 	int i = 1;
 	for (auto cell = triangulation.finite_cells_begin(); cell != triangulation.finite_cells_end(); ++cell)
 	{
-		cell->weight() = CGAL::default_random.get_double(0,1); // random ?
+		// cell->weight() = CGAL::default_random.get_double(0,1); // random ?
+		cell->weight() = i; // random ?
 		cell->info() = i++;
 	}
 	triangulation.infinite_cell()->info() = 0;

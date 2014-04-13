@@ -5,6 +5,9 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+// some VC++2013 internally include stuff needed this
+#define _SCL_SECURE_NO_WARNINGS
+
 #include <cmath>
 #include <cassert>
 

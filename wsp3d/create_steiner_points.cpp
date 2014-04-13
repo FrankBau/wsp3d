@@ -77,14 +77,26 @@ void connect_steiner_points_for_cell(Graph& graph, Triangulation& triangulation,
 			// may throw an exception when they don't intersect in a point...
 			Point z = CGAL::object_cast<Point>(intersection);
 		
-			double distance_xz = sqrt(CGAL::squared_distance(x, y));
+			double distance_xz = sqrt(CGAL::squared_distance(x, z));
 			double distance_zy = sqrt(CGAL::squared_distance(y, z));
 
 			double edge_weight = distance_xz*cell->weight() + distance_zy*cell_neighbour->weight();
 
+			std::cout 
+				<< "connect cells " 
+				<< cell->info() 
+				<< " and " 
+				<< cell_neighbour->info() 
+				<< " meeting at point [ "
+				<< z
+				<< " ] with edge of weight "
+				<< edge_weight
+				<< std::endl;
+
 			GraphEdge_descriptor edge;
 			bool inserted;
 			boost::tie(edge, inserted) = boost::add_edge(u, v, graph);
+			assert(inserted);
 			graph[edge].weight = edge_weight;
 		}
 	}
@@ -101,12 +113,12 @@ void create_steiner_points(Graph& graph, Triangulation& triangulation)
 	//	
 	//}
 
-	for (auto cell = triangulation.cells_begin(); cell != triangulation.cells_end(); ++cell)
+	for (auto cell = triangulation.finite_cells_begin(); cell != triangulation.finite_cells_end(); ++cell)
 	{
 		create_steiner_points_for_cell(graph, triangulation, cell);
 	}
 
-	for (auto cell = triangulation.cells_begin(); cell != triangulation.cells_end(); ++cell)
+	for (auto cell = triangulation.finite_cells_begin(); cell != triangulation.finite_cells_end(); ++cell)
 	{
 		connect_steiner_points_for_cell(graph, triangulation, cell);
 	}

@@ -89,6 +89,7 @@
     <ClCompile Include="dump_triangulation.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="read_off.cpp" />
+    <ClCompile Include="write_graph_dot.cpp" />
     <ClCompile Include="write_off.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +101,7 @@
     <ClInclude Include="create_tetrahesdralization.h" />
     <ClInclude Include="dump_triangulation.h" />
     <ClInclude Include="read_off.h" />
+    <ClInclude Include="write_graph_dot.h" />
     <ClInclude Include="write_off.h" />
   </ItemGroup>
   <ItemGroup>

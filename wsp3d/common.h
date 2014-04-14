@@ -56,7 +56,14 @@
 struct GraphNode;
 struct GraphEdge;
 
-typedef boost::adjacency_list < boost::vecS, boost::vecS, boost::undirectedS, GraphNode, GraphEdge > Graph;
+typedef boost::adjacency_list < 
+	boost::vecS, 
+	boost::vecS, 
+	boost::undirectedS, 
+	GraphNode, 
+	GraphEdge
+	> Graph;
+
 typedef boost::graph_traits<Graph>::vertex_descriptor GraphNode_descriptor;
 typedef boost::graph_traits<Graph>::edge_descriptor   GraphEdge_descriptor;
 
@@ -165,11 +172,11 @@ private:
 	void init() 
 	{ 
 		_node = 0;
-		_weight = HUGE_VALD;
+		_weight = std::numeric_limits<double>::max();
 
 		for (int i = 0; i < 4; ++i) 
 			for (int j = 0; j < 4; ++j) 
-				_w[i][j] = HUGE_VALD; 
+				_w[i][j] = std::numeric_limits<double>::max();
 	}
 	
 	int _info;
@@ -206,11 +213,12 @@ typedef Triangulation::Cell_handle							Cell_handle;
 struct GraphNode
 {
 public:
-	GraphNode()
+	GraphNode() : 
+		cell(0),
+		i(-1),
+		j(-1)
 	{
-		std::cout << "GraphNode()" << std::endl;
-		cell = 0;
-		i = j = -1; 
+		// std::cout << "GraphNode()" << std::endl;
 	}
 
 	Cell_handle cell;	// the cell it belongs to
@@ -220,6 +228,7 @@ public:
 
 struct GraphEdge
 {
+	// we could have done this with internal properties too
 	double weight;
 };
 

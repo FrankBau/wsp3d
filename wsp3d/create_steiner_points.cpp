@@ -2,7 +2,7 @@
 
 void create_steiner_points_for_cell(Graph& graph, Triangulation& triangulation, Cell_handle cell)
 {
-	std::cerr << "create_steiner_points_for_cell(" << cell->info() << ")";
+	// std::cout << "create_steiner_points_for_cell(" << cell->info() << ")";
 
 	Tetrahedron tetrahedron = triangulation.tetrahedron(cell);
 
@@ -20,7 +20,7 @@ void create_steiner_points_for_cell(Graph& graph, Triangulation& triangulation, 
 
 	Point p = CGAL::ORIGIN + v;
 
-	std::cerr << " center point at [ " << p << " ] " << std::endl;
+	// std::cerr << " center point at [ " << p << " ] " << std::endl;
 
 	GraphNode_descriptor node = boost::add_vertex(graph);
 	graph[node].cell = cell;
@@ -82,6 +82,7 @@ void connect_steiner_points_for_cell(Graph& graph, Triangulation& triangulation,
 
 			double edge_weight = distance_xz*cell->weight() + distance_zy*cell_neighbour->weight();
 
+#if 0
 			std::cout 
 				<< "connect cells " 
 				<< cell->info() 
@@ -92,6 +93,7 @@ void connect_steiner_points_for_cell(Graph& graph, Triangulation& triangulation,
 				<< " ] with edge of weight "
 				<< edge_weight
 				<< std::endl;
+#endif
 
 			GraphEdge_descriptor edge;
 			bool inserted;

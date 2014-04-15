@@ -10,6 +10,7 @@
 
 #include <cmath>
 #include <cassert>
+#include <cstdlib>
 
 #include <vector>
 #include <iostream>
@@ -25,6 +26,7 @@
 // #define BOOST_CHRONO_HEADER_ONLY
 
 #include <boost/config.hpp>
+#include <boost/filesystem.hpp>
 #include <boost/chrono.hpp>
 
 #include <boost/graph/graph_traits.hpp>

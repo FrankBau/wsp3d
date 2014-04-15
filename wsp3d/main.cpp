@@ -17,10 +17,28 @@ int main()
 {
 	Triangulation triangulation;
 
-	create_cubes(triangulation, 2, 2, 1 );
+	boost::filesystem::path input_pathname = "C:/Carleton/CGAL-4.4/demo/Polyhedron/data/elephant.off";
+
+	// create_cubes(triangulation, 2, 2, 1 );
+	read_off( triangulation, input_pathname.string() );
+
 	// read_off(triangulation, "C:/Carleton/Meshes/holmes_off/geometry/octahedron.off"); 
 	// read_off(triangulation, "C:/Carleton/CGAL-4.4/demo/Polyhedron/data/cube.off");
 	// read_off(triangulation, "C:/Carleton/CGAL-4.4/demo/Polyhedron/data/ellipsoid.off");
+
+#if 0
+	for (auto cell = triangulation.finite_cells_begin(); cell != triangulation.finite_cells_end(); ++cell)
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			Point p = cell->vertex(i)->point();
+			assert(-10.0 < p.x() && p.x() < +10.0);
+			assert(-10.0 < p.y() && p.y() < +10.0);
+			assert(-10.0 < p.z() && p.z() < +10.0);
+		}
+	}
+#endif
+
 	set_cell_and_vertex_ids(triangulation);
 	set_random_weights(triangulation);
 	propagate_weights(triangulation);
@@ -30,7 +48,8 @@ int main()
 	std::cout << "Number of finite facets   : " << triangulation.number_of_finite_facets() << std::endl;
 	std::cout << "Number of finite cells    : " << triangulation.number_of_finite_cells() << std::endl;
 
-	write_vtk(triangulation,"tetrahedralization.vtk");
+	std::string filename = input_pathname.filename().stem().string() + "_tet.vtk";
+	write_vtk( triangulation, filename );
 
 	if (triangulation.number_of_finite_cells() < 100)
 	{
@@ -53,9 +72,10 @@ int main()
 		predecessor_map(boost::make_iterator_property_map(predecessors.begin(), get(boost::vertex_index, graph)))
 	);
 	
-	write_shortest_path_vtk(graph, predecessors, distances, "shortest_path.vtk");
+	filename = input_pathname.filename().stem().string() + "_wsp.vtk";
+	write_shortest_path_vtk( graph, predecessors, distances, filename );
 
-	write_graph_dot("graph.dot", graph);
+	// write_graph_dot("graph.dot", graph);
 
 	std::cout << "This is the end..." << std::endl;
 

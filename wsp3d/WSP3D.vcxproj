@@ -87,7 +87,9 @@
   <ItemGroup>
     <ClCompile Include="create_steiner_points.cpp" />
     <ClCompile Include="dump_triangulation.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="read_off.cpp" />
     <ClCompile Include="write_graph_dot.cpp" />
     <ClCompile Include="write_off.cpp" />

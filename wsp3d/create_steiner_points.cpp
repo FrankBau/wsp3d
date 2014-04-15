@@ -20,7 +20,7 @@ void create_steiner_points_for_cell(Graph& graph, Triangulation& triangulation, 
 
 	Point p = CGAL::ORIGIN + v;
 
-	std::cerr << " center point at [ " << p << " ] " << std::endl;
+	// std::cerr << " center point at [ " << p << " ] " << std::endl;
 
 	GraphNode_descriptor node = boost::add_vertex(graph);
 	graph[node].cell = cell;
@@ -54,6 +54,8 @@ void connect_steiner_points_for_cell(Graph& graph, Triangulation& triangulation,
 {
 	GraphNode_descriptor u = cell->node();
 
+	assert(triangulation.is_valid_finite(cell));
+
 	for (int i = 0; i < 4; ++i)
 	{
 		Cell_handle cell_neighbour = cell->neighbor(i);
@@ -61,10 +63,20 @@ void connect_steiner_points_for_cell(Graph& graph, Triangulation& triangulation,
 		{
 			// Facet facet = Facet(cell, i); // facet opposite to vertex i 
 			// Triangle triangle = triangulation.triangle(facet);
+
 			// the 3 corner points of the triangle are
-			Point p1 = cell->vertex((i + 1) % 4)->point();
-			Point p2 = cell->vertex((i + 2) % 4)->point();
-			Point p3 = cell->vertex((i + 3) % 4)->point();
+			Vertex_handle v1 = cell->vertex((i + 1) % 4);
+			Vertex_handle v2 = cell->vertex((i + 2) % 4);
+			Vertex_handle v3 = cell->vertex((i + 3) % 4);
+
+			assert(!triangulation.is_infinite(v1));
+			assert(!triangulation.is_infinite(v2));
+			assert(!triangulation.is_infinite(v3));
+
+			Point p1 = v1->point();
+			Point p2 = v2->point();
+			Point p3 = v3->point();
+
 			Kernel::Plane_3 plane(p1, p2, p3);
 
 			GraphNode_descriptor v = cell_neighbour->node();

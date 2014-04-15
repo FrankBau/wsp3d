@@ -1,5 +1,5 @@
 #include "common.h"
-#include "create_tetrahesdralization.h"
+#include "create_tetrahedralization.h"
 
 /*
   creates a n x m x k array of tetrahedralized cubes 

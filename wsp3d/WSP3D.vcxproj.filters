@@ -44,9 +44,6 @@
     <ClInclude Include="common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="create_tetrahesdralization.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="dump_triangulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -63,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="write_vtk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="create_tetrahedralization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

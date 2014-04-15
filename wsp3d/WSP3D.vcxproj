@@ -99,7 +99,7 @@
       <FileType>CppHeader</FileType>
     </ClCompile>
     <ClInclude Include="create_steiner_points.h" />
-    <ClInclude Include="create_tetrahesdralization.h" />
+    <ClInclude Include="create_tetrahedralization.h" />
     <ClInclude Include="dump_triangulation.h" />
     <ClInclude Include="read_off.h" />
     <ClInclude Include="write_graph_dot.h" />

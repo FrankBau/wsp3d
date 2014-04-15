@@ -57,9 +57,17 @@ bool write_vtk(Triangulation& triangulation, std::string filename)
 	}
 
 	file.close();
+
+	return true;
 }
 
-bool write_shortest_path_vtk(Graph& graph, std::vector<GraphNode_descriptor>& predecessors, std::string filename)
+bool write_shortest_path_vtk
+(
+	Graph& graph,
+	std::vector<GraphNode_descriptor>& predecessors,
+	std::vector<double>& distances,
+	std::string filename
+)
 {
 	std::ofstream file(filename, std::ios::trunc);
 	if (!file.is_open())
@@ -103,4 +111,17 @@ bool write_shortest_path_vtk(Graph& graph, std::vector<GraphNode_descriptor>& pr
 		file << "3" "\n";
 	}
 
+	file
+		<< "POINT_DATA " << n << "\n"
+		<< "SCALARS distance double 1\n"
+		<< "LOOKUP_TABLE default\n";
+
+	for (boost::tie(vertexIt, vertexEnd) = boost::vertices(graph); vertexIt != vertexEnd; ++vertexIt)
+	{
+		GraphNode_descriptor u = *vertexIt;
+		file << distances[u] << "\n";
+	}
+	file << "\n";
+
+	return true;
 }

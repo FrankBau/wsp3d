@@ -8,11 +8,12 @@
 bool read_off(Triangulation& triangulation, std::string filename)
 {
 	std::ifstream file;
+	// file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
 	file.open(filename);
 	if (!file.is_open())
 	{
 		std::cerr << "failed to open file " << filename << std::endl;
-		return false;
+		exit(EXIT_FAILURE);
 	}
 
 	std::cout << "reading file " << filename << std::endl;
@@ -36,13 +37,28 @@ bool read_off(Triangulation& triangulation, std::string filename)
 	std::vector<Point> pointVector;
 	for (int i = 0; i < v; ++i)
 	{
-		std::getline(file, line);
-		std::stringstream ss(line);
 		double x, y, z;
-		ss >> x;
-		ss >> y;
-		ss >> z;
+
+		if (!(file >> x))
+		{
+			std::cerr << "failed to read x for point " << i << ", exit";
+			exit(EXIT_FAILURE);
+		}
+
+		if (!(file >> y))
+		{
+			std::cerr << "failed to read y for point " << i << ", exit";
+			exit(EXIT_FAILURE);
+		}
+
+		if (!(file >> z))
+		{
+			std::cerr << "failed to read z for point " << i << ", exit";
+			exit(EXIT_FAILURE);
+		}
+
 		Point point(x, y, z);
+
 		pointVector.push_back(point);
 	}
 

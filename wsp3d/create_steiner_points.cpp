@@ -16,11 +16,11 @@ void create_steiner_points_for_cell(Graph& graph, Triangulation& triangulation, 
 	Kernel::Vector_3 v2 = p2 - CGAL::ORIGIN;
 	Kernel::Vector_3 v3 = p3 - CGAL::ORIGIN;
 
-	Kernel::Vector_3 v = ( v0 + v1 + v2 + v3 ) / 2;
+	Kernel::Vector_3 v = ( v0 + v1 + v2 + v3 ) / 4;
 
 	Point p = CGAL::ORIGIN + v;
 
-	// std::cerr << " center point at [ " << p << " ] " << std::endl;
+	std::cerr << " center point at [ " << p << " ] " << std::endl;
 
 	GraphNode_descriptor node = boost::add_vertex(graph);
 	graph[node].cell = cell;

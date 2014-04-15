@@ -36,6 +36,9 @@
     <ClCompile Include="write_graph_dot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="write_vtk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -57,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="write_graph_dot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="write_vtk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

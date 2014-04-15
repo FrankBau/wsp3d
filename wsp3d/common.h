@@ -56,11 +56,11 @@
 struct GraphNode;
 struct GraphEdge;
 
-typedef boost::adjacency_list < 
-	boost::vecS, 
-	boost::vecS, 
-	boost::undirectedS, 
-	GraphNode, 
+typedef boost::adjacency_list <
+	boost::vecS,
+	boost::vecS,
+	boost::undirectedS,
+	GraphNode,
 	GraphEdge
 	> Graph;
 
@@ -90,10 +90,6 @@ public:
 	My_vertex_base(const Point& p, Cell_handle c)
 		: Vb(p, c) {}
 
-	// now we can have members like:
-	// Vertex_handle   vh;
-	// Cell_handle     ch;
-
 	int& info() { return _info; };
 
 private:
@@ -115,19 +111,19 @@ public:
 	};
 
 	// must implement all ctors of Cb:
-	My_cell_base() : _info(0) 
+	My_cell_base()
 	{ 
-		init();  
+		init();
 	}
 
 	My_cell_base(Vertex_handle v0, Vertex_handle v1, Vertex_handle v2, Vertex_handle v3)
-		: _info(0), Cb(v0, v1, v2, v3) 
+		: Cb(v0, v1, v2, v3) 
 	{
 		init();
 	}
 
 	My_cell_base(Vertex_handle v0, Vertex_handle v1, Vertex_handle v2, Vertex_handle v3, Cell_handle n0, Cell_handle n1, Cell_handle n2, Cell_handle n3)
-		: _info(0), Cb(v0, v1, v2, v3, n0, n1, n2, n3) 
+		: Cb(v0, v1, v2, v3, n0, n1, n2, n3) 
 	{
 		init();
 	}
@@ -136,9 +132,9 @@ public:
 	// Vertex_handle   vh;
 	// Cell_handle     ch;
 
-	int& info() 
+	int& info()
 	{ 
-		return _info; 
+		return _info;
 	};
 	
 	// weight of an edge
@@ -170,59 +166,55 @@ public:
 
 private:
 	void init() 
-	{ 
-		_node = 0;
-		_weight = std::numeric_limits<double>::max();
+	{
 
 		for (int i = 0; i < 4; ++i) 
 			for (int j = 0; j < 4; ++j) 
 				_w[i][j] = std::numeric_limits<double>::max();
 	}
 	
-	int _info;
-	double _weight;
+	int _info = 0;
+	double _weight = std::numeric_limits<double>::max();;
 	double _w[4][4]; // face (i==j) and edge (i!=j) weights
-	GraphNode_descriptor _node;
+	GraphNode_descriptor _node = 0;
 };
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel Kernel;
 
-typedef CGAL::Triangulation_data_structure_3<My_vertex_base<Kernel>, My_cell_base<Kernel> >    Tds;
+typedef CGAL::Triangulation_data_structure_3<My_vertex_base<Kernel>, My_cell_base<Kernel> > Tds;
 
-typedef CGAL::Delaunay_triangulation_3<Kernel, Tds>			Triangulation;
+typedef CGAL::Delaunay_triangulation_3<Kernel, Tds> Triangulation;
 
 // combinatorial types
-typedef Triangulation::Cell									Cell; 
-typedef Triangulation::Facet								Facet;
-typedef Triangulation::Edge									Edge;
-typedef Triangulation::Vertex								Vertex;
+typedef Triangulation::Cell                                 Cell;
+typedef Triangulation::Facet                                Facet;
+typedef Triangulation::Edge                                 Edge;
+typedef Triangulation::Vertex                               Vertex;
 
 // geometric equivalents
-typedef Triangulation::Tetrahedron							Tetrahedron;
-typedef Triangulation::Triangle								Triangle;
-typedef Triangulation::Segment								Segment;
-typedef Triangulation::Point								Point;
+typedef Triangulation::Tetrahedron                          Tetrahedron;
+typedef Triangulation::Triangle                             Triangle;
+typedef Triangulation::Segment                              Segment;
+typedef Triangulation::Point                                Point;
 
-typedef Triangulation::Facet_circulator						Facet_circulator;
+typedef Triangulation::Facet_circulator                     Facet_circulator;
 
 typedef Triangulation::Vertex_handle                        Vertex_handle;
-typedef Triangulation::Cell_handle							Cell_handle;
+typedef Triangulation::Cell_handle                          Cell_handle;
 
 ///////////////////////////// boost Graph details /////////////////////////////
 
 struct GraphNode
 {
 public:
-	GraphNode() : 
-		cell(0),
-		i(-1),
-		j(-1)
+	GraphNode()
 	{
 		// std::cout << "GraphNode()" << std::endl;
 	}
 
-	Cell_handle cell;	// the cell it belongs to
-	int i, j;			// index i (face related node) rsp. i,j (edge related node)
+	Cell_handle cell = 0;   // the cell it belongs to
+	int i = -1;             // index i (face related node) 
+	int j = -1;             // rsp. i,j (edge related node)
 	Point point;
 };
 
@@ -231,6 +223,5 @@ struct GraphEdge
 	// we could have done this with internal properties too
 	double weight;
 };
-
 
 #endif

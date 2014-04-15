@@ -91,6 +91,7 @@
     <ClCompile Include="read_off.cpp" />
     <ClCompile Include="write_graph_dot.cpp" />
     <ClCompile Include="write_off.cpp" />
+    <ClCompile Include="write_vtk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
@@ -103,6 +104,7 @@
     <ClInclude Include="read_off.h" />
     <ClInclude Include="write_graph_dot.h" />
     <ClInclude Include="write_off.h" />
+    <ClInclude Include="write_vtk.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />

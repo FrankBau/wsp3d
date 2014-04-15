@@ -7,6 +7,7 @@
 #include "read_off.h"
 #include "write_off.h"
 #include "write_vrml.h"
+#include "write_vtk.h"
 #include "write_graph_dot.h"
 
 #include <iostream>
@@ -14,23 +15,23 @@
 
 void set_info_and_weights(Triangulation& triangulation)
 {
-	triangulation.infinite_cell()->info() = 0;
-	triangulation.infinite_vertex()->info() = 0;
+	triangulation.infinite_cell()->info() = -1;
+	triangulation.infinite_vertex()->info() = -1;
 
 	triangulation.infinite_cell()->weight() = std::numeric_limits<double>::max();
 
 	// set cell weights and 
-	// assign number to cells, starting at 1
-	int i = 1;
+	// assign number to cells, starting at 0
+	int i = 0;
 	for (auto cell = triangulation.finite_cells_begin(); cell != triangulation.finite_cells_end(); ++cell)
 	{
 		// cell->weight() = CGAL::default_random.get_double(0,1); // random ?
-		cell->weight() = i; // random ?
+		 cell->weight() = i; // random ?
 		cell->info() = i++;
 	}
 
-	// assign number to vertices, starting at 1
-	i = 1;
+	// assign number to vertices, starting at 0
+	i = 0;
 	for (auto vertex = triangulation.finite_vertices_begin(); vertex != triangulation.finite_vertices_end(); ++vertex)
 	{
 		vertex->info() = i++;
@@ -77,12 +78,11 @@ void set_info_and_weights(Triangulation& triangulation)
 int main()
 {
 	Triangulation triangulation;
-	
-	create_cubes(triangulation, 50, 50, 50 );
 
+	create_cubes(triangulation, 2, 2, 2 );
 	// read_off(triangulation, "C:/Carleton/Meshes/holmes_off/geometry/octahedron.off"); 
-	//read_off(triangulation, "C:/Carleton/CGAL-4.4/demo/Polyhedron/data/cube.off");
-	//read_off(triangulation, "C:/Carleton/CGAL-4.4/demo/Polyhedron/data/ellipsoid.off");
+	// read_off(triangulation, "C:/Carleton/CGAL-4.4/demo/Polyhedron/data/cube.off");
+	// read_off(triangulation, "C:/Carleton/CGAL-4.4/demo/Polyhedron/data/ellipsoid.off");
 
 	std::cout << "Number of finite vertices : " << triangulation.number_of_vertices() << std::endl;
 	std::cout << "Number of finite edges    : " << triangulation.number_of_finite_edges() << std::endl;
@@ -90,6 +90,8 @@ int main()
 	std::cout << "Number of finite cells    : " << triangulation.number_of_finite_cells() << std::endl;
 
 	set_info_and_weights(triangulation);
+
+	write_vtk(triangulation,"tetra.vtk");
 
 	if (triangulation.number_of_finite_cells() < 100)
 	{
@@ -112,6 +114,8 @@ int main()
 		predecessor_map(boost::make_iterator_property_map(predecessors.begin(), get(boost::vertex_index, graph)))
 	);
 	
+	write_shortest_path_vtk(graph, predecessors, "shortest_path.vtk" );
+
 	write_graph_dot("graph.dot", graph);
 
 	std::cout << "This is the end..." << std::endl;
